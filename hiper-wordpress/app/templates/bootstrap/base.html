@@ -1,0 +1,49 @@
+{% block doc -%}
+<!DOCTYPE html>
+<html{% block html_attribs %}{% endblock html_attribs %}>
+  {%- block html %}
+
+  <head>
+    {%- block head %}
+    <title>Integração - WooCommerce e Hiper</title>
+
+    {%- block metas %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Site para integração entre WooCommerce e Hiper">
+    <meta name="author" content="Carlos Sousa">
+    {%- endblock metas %}
+
+    {% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cover.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='fav.ico') }}" type="image/x-icon">
+    {% endblock styles %}
+    {%- endblock head %}
+  </head>
+  <body{% block body_attribs %}{% endblock body_attribs %}>
+    {% block body -%}
+
+    {% block content -%}
+    {% endblock content -%}
+
+    {% block scripts %}
+    <script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/hiper_wp.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+      function onSubmit(token) {
+        document.getElementById("loginForm").submit();
+      }
+    </script>
+    {%- endblock scripts %}
+
+    {%- endblock body %}
+    </body>
+    {%- endblock html %}
+
+    </html>
+    {% endblock doc -%}

@@ -1,0 +1,166 @@
+{%- extends "index.html" %}
+{% block content %}
+{{ super() }}
+<div class="container">
+  <div class="table-responsive">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-6">
+            <h2>Gerenciar clientes</h2>
+          </div>
+          <div class="col-sm-6">
+            <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i
+                class="material-icons">&#xE147;</i> <span>Adicionar novo cliente</span></a>
+          </div>
+        </div>
+      </div>
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>Consumer Key (Woocommerce)</th>
+            <th>Consumer Secret (Woocommerce)</th>
+            <th>Token (Hiper)</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cliente in clientes %}
+          <tr>
+
+            <td>{{ cliente['site'] }}</td>
+            <td>***</td>
+            <td>***</td>
+            <td>***</td>
+            <td>
+              <a href="#editEmployeeModal_{{ cliente['id_customer'] }}" class="edit" data-toggle="modal"><i
+                  class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
+              <a href="#deleteEmployeeModal_{{ cliente['id_customer'] }}" class="delete" data-toggle="modal"><i
+                  class="material-icons" data-toggle="tooltip" title="Excluir">&#xE872;</i></a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- Add Modal HTML -->
+<div id="addEmployeeModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/api/adicionar-cliente" method="POST">
+        <div class="modal-header">
+          <h4 class="modal-title">Adicionar Cliente</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Site</label>
+            <input type="text" name="site" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Consumer Key (Woocommerce)</label>
+            <input type="text" name="consumer_key" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Consumer Secret (Woocommerce)</label>
+            <input type="text" name="consumer_secret" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Token (Hiper)</label>
+            <input type="text" name="token_hiper" class="form-control" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+          <input type="submit" class="btn btn-success" value="Adicionar">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Modal HTML -->
+<div id="deleteEmployeeModal_0" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form name="delete_multiple_customers">
+        <div class="modal-header">
+          <h4 class="modal-title">Excluir cliente(s)</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Tem certeza que deseja excluir esses registros?</p>
+        </div>
+        <div class="modal-footer">
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+          <input type="submit" class="btn btn-danger" value="Apagar">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% for cliente in clientes %}
+<div id="deleteEmployeeModal_{{ cliente['id_customer'] }}" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/api/remover-cliente/{{ cliente['id_customer'] }}" method="POST">
+        <div class="modal-header">
+          <h4 class="modal-title">Excluir cliente</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Tem certeza que deseja excluir o cliente do site ({{ cliente['site'] }})?</p>
+        </div>
+        <div class="modal-footer">
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+          <input type="submit" class="btn btn-danger" value="Apagar">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+<!-- Edit Modal HTML -->
+{% for cliente in clientes %}
+<div id="editEmployeeModal_{{ cliente['id_customer'] }}" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/api/atualizar-cliente/{{ cliente['id_customer'] }}" method="POST">
+        <div class="modal-header">
+          <h4 class="modal-title">Editar Cliente</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Site</label>
+            <input type="text" class="form-control" name="site" value="{{ cliente['site'] }}" required>
+          </div>
+          <div class="form-group">
+            <label>Consumer Key (Woocommerce)</label>
+            <input type="text" class="form-control" name="consumer_key"  value="{{ cliente['consumer_key'] }}" required>
+          </div>
+          <div class="form-group">
+            <label>Consumer Secret (Woocommerce)</label>
+            <input type="text" class="form-control" name="consumer_secret" value="{{ cliente['consumer_secret'] }}" required>
+          </div>
+          <div class="form-group">
+            <label>Token (Hiper)</label>
+            <input type="text" class="form-control" name="token_hiper" value="{{ cliente['token_hiper'] }}" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+          <input type="submit" class="btn btn-success" value="Salvar">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}

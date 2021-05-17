@@ -1,0 +1,7 @@
+flask==1.1.2
+flask-sqlalchemy==2.4.4
+uwsgi
+requests
+woocommerce
+psycopg2
+APScheduler

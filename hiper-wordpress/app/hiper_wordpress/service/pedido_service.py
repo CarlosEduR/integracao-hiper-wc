@@ -33,12 +33,12 @@ def enviar(pedido_data, token_hiper):
     pedido_hiper['valorDoFrete'] = buscar_meios_pagamento(pedido_data)
 
     for data in pedido_data['meta_data']:
-        if data['key'] == '_billing_wooccm11':
+        if data['key'] == 'billing_cpf':
             pedido_hiper['cliente']['documento'] = data['value']
-        if data['key'] == '_billing_wooccm12':
+        if data['key'] == 'billing_neighborhood':
             pedido_hiper['enderecoDeEntrega']['bairro'] = data['value']
             pedido_hiper['enderecoDeCobranca']['bairro'] = data['value']
-        if data['key'] == '_billing_wooccm13':
+        if data['key'] == 'billing_number':
             pedido_hiper['enderecoDeEntrega']['numero'] = data['value']
             pedido_hiper['enderecoDeCobranca']['numero'] = data['value']
     

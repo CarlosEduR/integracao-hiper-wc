@@ -98,6 +98,4 @@ def adicionar_produto(produto, produto_hiper, wcapi):
 def gerar_token(token):
     token_response = requests.get('https://ms-ecommerce.hiper.com.br/api/v1/auth/gerar-token/{}'.format(token))
     print(token_response)
-    print(token_response.text)
-    # auth_data = requests.get('https://ms-ecommerce.hiper.com.br/api/v1/auth/gerar-token/{}'.format(token)).json()
     return token_response.json()['token']

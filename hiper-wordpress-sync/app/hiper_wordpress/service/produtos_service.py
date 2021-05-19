@@ -24,14 +24,14 @@ def exportar_todos_clientes():
             try:
                 produtos = requests.get('https://ms-ecommerce.hiper.com.br/api/v1/produtos/pontoDeSincronizacao', headers={'Authorization' : 'Bearer {}'.format(gerar_token(cliente['token_hiper']))}).json()['produtos']
                 print('{} produtos encontrados.'.format(len(produtos)))
-                # for produto_hiper in produtos:
-                    # autenticacao = autenticar_woocommerce(cliente)
-                    # produto = gerar_produto_objeto(produto_hiper, autenticacao)
-                    # try:
-                        # adicionar_produto(produto, produto_hiper, autenticacao)
-                        # print(f'Produtos enviados para o cliente [{cliente.get("site")}].')
-                    # except Exception as exc:
-                        # print(f'Erro ao enviar produto para o cliente [{cliente.get("site")}].')
+                for produto_hiper in produtos:
+                    autenticacao = autenticar_woocommerce(cliente)
+                    produto = gerar_produto_objeto(produto_hiper, autenticacao)
+                    try:
+                        adicionar_produto(produto, produto_hiper, autenticacao)
+                        print(f'Produtos enviados para o cliente [{cliente.get("site")}].')
+                    except Exception as exc:
+                        print(f'Erro ao enviar produto para o cliente [{cliente.get("site")}].')
             except Exception as exp:
                 print('Não foi possível buscar os produtos no Hiper. Exceção: {}'.format(exp))
 

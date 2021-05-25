@@ -17,12 +17,11 @@ def create_app(config_class=Config):
 
 def create_scheduler():
     from app.hiper_wordpress.service import produtos_service
-    produtos_service.exportar_todos_clientes()
-    # jobstore = {
-    #     'default' : SQLAlchemyJobStore(url=os.environ.get('DATABASE_URL').replace('postgres', 'postgresql'))
-    # }
-    # scheduler = BackgroundScheduler(jobstore=jobstore, daemon=True)
-    # scheduler.remove_all_jobs()
-    # scheduler.add_job(produtos_service.exportar_todos_clientes, 'interval', minutes=5, id='exportar_produtos')
-    # scheduler.start()
-    # atexit.register(lambda: scheduler.shutdown())
+    jobstore = {
+        'default' : SQLAlchemyJobStore(url=os.environ.get('DATABASE_URL').replace('postgres', 'postgresql'))
+    }
+    scheduler = BackgroundScheduler(jobstore=jobstore, daemon=True)
+    scheduler.remove_all_jobs()
+    scheduler.add_job(produtos_service.exportar_todos_clientes, 'interval', minutes=5, id='exportar_produtos')
+    scheduler.start()
+    atexit.register(lambda: scheduler.shutdown())

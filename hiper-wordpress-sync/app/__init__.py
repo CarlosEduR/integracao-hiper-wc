@@ -18,7 +18,7 @@ def create_app(config_class=Config):
 def create_scheduler():
     from app.hiper_wordpress.service import produtos_service
     jobstore = {
-        'default' : SQLAlchemyJobStore(url=Config.SQLALCHEMY_DATABASE_URI)
+        'default' : SQLAlchemyJobStore(url=os.environ.get('DATABASE_URL').replace('postgres', 'postgresql'))
     }
     scheduler = BackgroundScheduler(jobstore=jobstore, daemon=True)
     scheduler.remove_all_jobs()
